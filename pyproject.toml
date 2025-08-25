@@ -1,0 +1,60 @@
+[project]
+name = "ptf"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "NSPC911", email = "87571998+NSPC911@users.noreply.github.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "textual>=5.3.0",
+    "textual-pdf>=0.1.0",
+    "watchdog>=6.0.0",
+]
+keywords = ["python", "textual", "tui", "pdf"]
+classifiers = []
+
+[project.scripts]
+ptf = "ptf:main"
+
+[build-system]
+requires = ["uv_build>=0.8.13,<0.9.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "poethepoet>=0.37.0",
+    "ruff>=0.12.10",
+    "textual-dev>=1.7.0",
+]
+
+[tool.poe.tasks]
+run = "ptf"
+[tool.ruff.lint]
+select = [
+  "ASYNC251",
+  "ANN",
+  "COM819",
+  "C400",
+  "DOC",
+  "D404",
+  "E",
+  "F",
+  "I",
+  "N801", "N802", "N805",
+  "PLE1142",
+  "Q",
+  "SIM",
+  "TD",
+  "W",
+]
+ignore = ["W505", "E501", "ANN002", "ANN003", "TD002", "TD003"]
+preview = true
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+preview = true
+

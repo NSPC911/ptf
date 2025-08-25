@@ -1,0 +1,68 @@
+Footer {
+    background: transparent !important;
+    .footer-key--key, .footer-key--description {
+        background: white !important;
+        color: black !important;
+        opacity: 1 !important;
+        text-opacity: 1 !important;
+        background-tint: transparent !important;
+        tint: transparent !important;
+    }
+}
+VerticalGroup {
+    align: center middle;
+    width: auto;
+    & > * {
+        align-horizontal: center;
+    }
+}
+HorizontalGroup#outer * {
+    border: round $accent;
+    background: transparent;
+    &Button {
+        max-width: 7;
+        max-height: 3;
+        width: 3;
+        opacity: 1 !important;
+        background-tint: transparent !important;
+        text-opacity: 1 !important;
+        border: round $primary;
+        tint: transparent !important;
+        &:focus {
+            border: round $accent;
+        }
+        &:disabled {
+            border: round $error-darken-3;
+        }
+        &.-active {
+            background: transparent;
+            border: round $accent-lighten-3;
+        }
+    }
+    &Label#empty_focusable {
+        border: none !important;
+        padding: 0 !important;
+    }
+    &HorizontalGroup {
+        height: 3;
+        width: 9;
+    }
+}
+HorizontalGroup#inner > * {
+    background: transparent;
+    &Input#current {
+        max-width: 5;
+        height: 3;
+        border: none;
+        padding-left: 1;
+        &:focus { background-tint: transparent !important }
+        &:ansi >.input--cursor {
+            background: white !important;
+            color: black !important;
+            text-style: none;
+        }
+    }
+    &Label {
+        border: none
+    }
+}
