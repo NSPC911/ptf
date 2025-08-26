@@ -36,7 +36,7 @@ HorizontalGroup#outer * {
         }
         &.-active {
             background: transparent;
-            border: round $accent-lighten-3;
+            border: round $accent;
         }
     }
     &Label#empty_focusable {

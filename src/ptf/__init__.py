@@ -59,16 +59,15 @@ class PDFTestApp(App):
             new_stmtime = self.pdf_path.stat().st_mtime
             if new_stmtime != prev_stmtime:
                 with contextlib.suppress(NotAPDFError):
-                    print("thing")
                     current_page = self.pdf_viewer.current_page
                     self.pdf_viewer.doc = fitz.open(self.pdf_path)
                     self.pdf_viewer._cache = {}
-                    self.pdf_viewer.render_page()
-                    if self.pdf_viewer.total_pages < current_page:
+                    if self.pdf_viewer.total_pages <= current_page:
                         self.pdf_viewer.current_page = self.pdf_viewer.total_pages - 1
                     else:
-                        self.pdf_viewer.current_page = current_page
-                    print("over")
+                        self.pdf_viewer.current_page -= 1
+                        self.pdf_viewer.current_page += 1
+                    self.fix_buttons()
             prev_stmtime = new_stmtime
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
@@ -82,11 +81,15 @@ class PDFTestApp(App):
         self.query_one("#empty_focusable").focus()
 
     def fix_buttons(self) -> None:
-        self.query_one("#prev").disabled = self.pdf_viewer.current_page == 0
-        self.query_one("#next").disabled = (
-            self.pdf_viewer.total_pages - 1 == self.pdf_viewer.current_page
-        )
-        self.query_one("#current").value = str(self.pdf_viewer.current_page + 1)
+        with self.batch_update():
+            self.query_one("#prev").disabled = self.pdf_viewer.current_page == 0
+            self.query_one("#next").disabled = (
+                self.pdf_viewer.total_pages - 1 == self.pdf_viewer.current_page
+            )
+            self.query_one("#current").value = str(self.pdf_viewer.current_page + 1)
+            total: Label = self.query_one("#total")
+            if total.visual != self.pdf_viewer.total_pages:
+                total.update(str(self.pdf_viewer.total_pages))
 
     def on_input_changed(self, event: Input.Changed) -> None:
         event.input.styles.max_width = len(event.value) + 2
